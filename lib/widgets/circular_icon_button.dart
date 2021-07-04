@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class CircularIconButton extends StatefulWidget {
   final Icon icon;
+  final void Function()? onPressed;
   final Color? backgroundColor;
-  CircularIconButton({Key? key, required this.icon, this.backgroundColor})
+  CircularIconButton(
+      {Key? key,
+      required this.icon,
+      this.backgroundColor,
+      required this.onPressed})
       : super(key: key);
 
   @override
@@ -13,12 +18,15 @@ class CircularIconButton extends StatefulWidget {
 class _CircularIconButtonState extends State<CircularIconButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(5),
-      child: widget.icon,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        color: widget.backgroundColor,
+    return GestureDetector(
+      onTap: widget.onPressed,
+      child: Container(
+        padding: EdgeInsets.all(5),
+        child: widget.icon,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: widget.backgroundColor,
+        ),
       ),
     );
   }

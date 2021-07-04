@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/themes/colors_scheme.dart';
-import 'package:tic_tac_toe/widgets/circular_icon_button.dart';
-import 'package:tic_tac_toe/widgets/rounded_elevated_button.dart';
+import '../themes/colors_scheme.dart';
+import '../widgets/circular_icon_button.dart';
+import '../widgets/rounded_elevated_button.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 RoundedElevatedButton(
                   icon: Icons.computer,
@@ -76,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             CircularIconButton(
+              onPressed: () {},
               icon: Icon(
                 Icons.settings,
                 size: 35,
