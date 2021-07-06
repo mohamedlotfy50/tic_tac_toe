@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/widgets/animated_title.dart';
+import 'package:tic_tac_toe/widgets/animated_xo.dart';
 import '../themes/colors_scheme.dart';
 import '../widgets/circular_icon_button.dart';
 import '../widgets/rounded_elevated_button.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,56 +28,33 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              'Tic Tac Toe',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: MyColorsScheme.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
+            AnimatedTitle(),
+            AnimatedXO(),
+            Container(
+              height: MediaQuery.of(context).size.height / 6.5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RoundedElevatedButton(
+                    icon: Icons.computer,
+                    onPressd: () {},
+                    text: 'single player',
+                  ),
+                  RoundedElevatedButton(
+                    icon: Icons.people,
+                    onPressd: () {},
+                    text: 'with a friend',
+                  ),
+                ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'X',
-                  style: TextStyle(
-                    color: MyColorsScheme.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 120,
-                  ),
-                ),
-                Text(
-                  'O',
-                  style: TextStyle(
-                    color: MyColorsScheme.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                RoundedElevatedButton(
-                  icon: Icons.computer,
-                  onPressd: () {},
-                  text: 'single player',
-                ),
-                RoundedElevatedButton(
-                  icon: Icons.people,
-                  onPressd: () {},
-                  text: 'with a friend',
-                ),
-              ],
             ),
             CircularIconButton(
               onPressed: () {},
               icon: Icon(
                 Icons.settings,
-                size: 35,
+                size: 40,
+                color: MyColorsScheme.purple,
               ),
               backgroundColor: Colors.white,
             )
