@@ -13,36 +13,119 @@ class ScoreBoard extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(player1.name),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: MyColorsScheme.white,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              UserName(
+                playerName: player1.name,
+                sign: player1.stringSign(),
               ),
-              child: IntrinsicHeight(
-                child: Row(
-                  children: [
-                    Text(player1.score.toString()),
-                    VerticalDivider(
-                      color: Colors.grey,
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        blurRadius: 6,
+                        color: MyColorsScheme.black.withAlpha(60),
+                        offset: Offset(
+                          6,
+                          6,
+                        ),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                    color: MyColorsScheme.white,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                player1.score.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: MyColorsScheme.purple,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                        VerticalDivider(
+                          color: MyColorsScheme.black,
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: Text(
+                              player2.score.toString(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: MyColorsScheme.purple,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(player2.score.toString()),
-                  ],
+                  ),
                 ),
               ),
-            ),
-            Text(player2.name),
-          ],
-        ),
+              UserName(
+                playerName: player2.name,
+                sign: player2.stringSign(),
+              ),
+            ]),
         SizedBox(
           height: 10,
         ),
-        Text("${player1.name}'s turn"),
+        Text(
+          "${player1.name}'s Turn",
+          style: TextStyle(color: MyColorsScheme.black, fontSize: 20),
+        ),
       ],
+    );
+  }
+}
+
+class UserName extends StatelessWidget {
+  final String playerName;
+  final String sign;
+  const UserName({Key? key, required this.playerName, required this.sign})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        child: Column(
+          children: [
+            Text(
+              playerName,
+              style: TextStyle(
+                  color: MyColorsScheme.white,
+                  fontSize: 25,
+                  fontFamily: 'Dancing Script'),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              sign.toUpperCase(),
+              style: TextStyle(
+                color: MyColorsScheme.black,
+                fontSize: 25,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

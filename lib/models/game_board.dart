@@ -4,8 +4,8 @@ import '../themes/colors_scheme.dart';
 enum XOSigns { x, o }
 
 class GameBoard {
-  Player player1 = Player('mohamed', XOSigns.x, MyColorsScheme.red);
-  Player player2 = Player('lotfy', XOSigns.o, MyColorsScheme.blue);
+  Player player1 = Player('Player 1', XOSigns.x, MyColorsScheme.red);
+  Player player2 = Player('Player 2', XOSigns.o, MyColorsScheme.blue);
 
   bool isOver = false;
   List<List<String>>? _board;

@@ -44,6 +44,7 @@ class _GameScreenState extends State<GameScreen> {
               onPressed: () {},
               icon: Icon(
                 Icons.settings,
+                size: 35,
                 color: MyColorsScheme.purple,
               ),
               backgroundColor: Colors.white,

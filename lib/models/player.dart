@@ -9,4 +9,5 @@ class Player {
   int score = 0;
 
   Player(this.name, this.sign, this.color);
+  String stringSign() => sign.toString().split('.')[1];
 }
