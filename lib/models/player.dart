@@ -35,4 +35,9 @@ class Player {
   int get hashCode {
     return name.hashCode ^ sign.hashCode ^ color.hashCode ^ _score.hashCode;
   }
+
+  @override
+  String toString() {
+    return 'Player(name: $name, sign: $sign, color: $color, isHuman: $isHuman, _score: $_score)';
+  }
 }

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/providers/home_page_provider.dart';
 
 import 'package:tic_tac_toe/themes/colors_scheme.dart';
 
-class ColorPicker extends StatefulWidget {
+class ColorPicker extends StatelessWidget {
   ColorPicker({Key? key}) : super(key: key);
 
-  @override
-  _ColorPickerState createState() => _ColorPickerState();
-}
-
-class _ColorPickerState extends State<ColorPicker> {
-  List<Color> _colors = [MyColorsScheme.blue, MyColorsScheme.red];
-  int curentIndex = 0;
+  final List<Color> _colors = [MyColorsScheme.blue, MyColorsScheme.red];
   @override
   Widget build(BuildContext context) {
+    final _provider = Provider.of<HomePageProvider>(context);
+
     return Container(
       height: 50,
       width: 110,
@@ -24,11 +22,9 @@ class _ColorPickerState extends State<ColorPicker> {
         itemCount: _colors.length,
         itemBuilder: (context, index) => SelectionCircle(
           color: _colors[index],
-          isSelected: curentIndex == index,
+          isSelected: _provider.player1Color == _colors[index],
           onPressed: () {
-            setState(() {
-              curentIndex = index;
-            });
+            _provider.setPlayersColors(_colors[index], _colors);
           },
         ),
       ),

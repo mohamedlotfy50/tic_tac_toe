@@ -28,37 +28,41 @@ class Board extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           height: MediaQuery.of(context).size.height / 1.9,
-          child: Column(
-            children: [
-              for (int y = 0; y < 3; y++)
-                Expanded(
-                  child: Row(
-                    children: [
-                      for (int x = 0; x < 3; x++)
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              _provider.makeAMove(y, x);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                  right: x < 2 ? 3 : 0, bottom: y < 2 ? 3 : 0),
-                              alignment: Alignment.center,
-                              color: MyColorsScheme.white,
-                              child: Text(
-                                _provider.gameBoard[y][x],
-                                style: TextStyle(
-                                    color: MyColorsScheme.purple,
-                                    fontSize: 65,
-                                    fontWeight: FontWeight.w400),
+          child: IgnorePointer(
+            ignoring: !_provider.isHumanTurn,
+            child: Column(
+              children: [
+                for (int y = 0; y < 3; y++)
+                  Expanded(
+                    child: Row(
+                      children: [
+                        for (int x = 0; x < 3; x++)
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                _provider.makeAMove(y, x);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    right: x < 2 ? 3 : 0,
+                                    bottom: y < 2 ? 3 : 0),
+                                alignment: Alignment.center,
+                                color: MyColorsScheme.white,
+                                child: Text(
+                                  _provider.gameBoard[y][x],
+                                  style: TextStyle(
+                                      color: MyColorsScheme.purple,
+                                      fontSize: 65,
+                                      fontWeight: FontWeight.w400),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

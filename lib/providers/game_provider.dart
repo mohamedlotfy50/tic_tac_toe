@@ -7,21 +7,9 @@ import 'package:tic_tac_toe/themes/colors_scheme.dart';
 class GameProvider extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
 
-  final TicTacToeGame _game = TicTacToeGame(
-    player1: Player(
-      sign: XOSigns.x,
-      color: MyColorsScheme.blue,
-      isHuman: true,
-      name: 'Player 1',
-    ),
-    player2: Player(
-      sign: XOSigns.o,
-      color: MyColorsScheme.red,
-      isHuman: true,
-      name: 'Player 2',
-    ),
-  );
-  GameProvider() {
+  late TicTacToeGame _game;
+  GameProvider({required Player player1, required Player player2}) {
+    _game = TicTacToeGame(player1: player1, player2: player2);
     _player.setAsset('assets/music/mixkit-metal-hammer-hit-833.wav',
         preload: true);
   }
@@ -38,6 +26,7 @@ class GameProvider extends ChangeNotifier {
   String get currentPlayerSign => _game.currentPlayer.stringSign();
   String get currentPlayerName => _game.currentPlayer.name;
   bool get isGameEnded => _game.isGameEnded;
+  bool get isHumanTurn => _game.currentPlayer.isHuman;
 
   void makeAMove(int y, int x) {
     _game.addToTheBoard(x, y);

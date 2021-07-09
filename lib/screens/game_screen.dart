@@ -9,12 +9,14 @@ import '../widgets/circular_icon_button.dart';
 import '../widgets/score_board.dart';
 
 class GameScreen extends StatelessWidget {
-  GameScreen({Key? key}) : super(key: key);
+  final Player player1, player2;
+  GameScreen({Key? key, required this.player1, required this.player2})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ChangeNotifierProvider(
-          create: (context) => GameProvider(),
+          create: (context) => GameProvider(player1: player1, player2: player2),
           builder: (context, child) {
             return AnimatedContainer(
               duration: Duration(milliseconds: 500),

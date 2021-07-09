@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/models/tic_tac_toe_game.dart';
+import 'package:tic_tac_toe/providers/home_page_provider.dart';
 
 import 'package:tic_tac_toe/themes/colors_scheme.dart';
 
-class SignPicker extends StatefulWidget {
+class SignPicker extends StatelessWidget {
   SignPicker({Key? key}) : super(key: key);
 
-  @override
-  _SignPickerState createState() => _SignPickerState();
-}
+  final List<XOSigns> _signs = XOSigns.values.toList();
 
-class _SignPickerState extends State<SignPicker> {
-  final List<XOSigns> signs = XOSigns.values.toList();
-  int curentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final _provider = Provider.of<HomePageProvider>(context);
+
     return Container(
       height: 50,
       width: 110,
@@ -22,14 +21,12 @@ class _SignPickerState extends State<SignPicker> {
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: signs.length,
+        itemCount: _signs.length,
         itemBuilder: (context, index) => SelectionCircle(
-          sign: signs[index],
-          isSelected: curentIndex == index,
+          sign: _signs[index],
+          isSelected: _provider.player1Sign == _signs[index],
           onPressed: () {
-            setState(() {
-              curentIndex = index;
-            });
+            _provider.setPlayersSigns(_signs[index], _signs);
           },
         ),
       ),

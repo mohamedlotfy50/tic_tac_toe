@@ -47,7 +47,17 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       RoundedElevatedButton(
                         icon: Icons.computer,
-                        onPressd: () {},
+                        onPressd: () {
+                          context.read<HomePageProvider>().showSelectionPage(
+                                context,
+                                ChangeNotifierProvider.value(
+                                  value: context.read<HomePageProvider>(),
+                                  builder: (context, child) => SelectionDialog(
+                                    isHuman: false,
+                                  ),
+                                ),
+                              );
+                        },
                         text: 'single player',
                       ),
                       RoundedElevatedButton(
@@ -55,7 +65,11 @@ class HomeScreen extends StatelessWidget {
                         onPressd: () {
                           context.read<HomePageProvider>().showSelectionPage(
                                 context,
-                                SelectionDialog(),
+                                ChangeNotifierProvider.value(
+                                  value: context.read<HomePageProvider>(),
+                                  builder: (context, child) =>
+                                      SelectionDialog(),
+                                ),
                               );
                         },
                         text: 'with a friend',

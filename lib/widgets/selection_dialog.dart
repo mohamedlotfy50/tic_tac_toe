@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/providers/home_page_provider.dart';
+import 'package:tic_tac_toe/screens/game_screen.dart';
 import 'package:tic_tac_toe/themes/colors_scheme.dart';
 import 'package:tic_tac_toe/widgets/sign_picker.dart';
 
 import 'color_picker.dart';
 
 class SelectionDialog extends StatelessWidget {
-  const SelectionDialog({Key? key}) : super(key: key);
+  final bool isHuman;
+  const SelectionDialog({Key? key, this.isHuman = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // final _provider = Provider.of<HomePageProvider>(context);
+    final _provider = Provider.of<HomePageProvider>(context);
     return AlertDialog(
       backgroundColor: MyColorsScheme.white,
       title: Text(
@@ -32,7 +34,14 @@ class SelectionDialog extends StatelessWidget {
       actions: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(primary: MyColorsScheme.purple),
-          onPressed: () {},
+          onPressed: () {
+            _provider.setPlayers(isHuman: isHuman);
+
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => GameScreen(
+                  player1: _provider.player1, player2: _provider.player2),
+            ));
+          },
           child: Text('Play'),
         ),
         TextButton(
