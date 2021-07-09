@@ -3,10 +3,23 @@ import '../models/player.dart';
 import '../themes/colors_scheme.dart';
 
 class ScoreBoard extends StatelessWidget {
-  final Player player1;
-  final Player player2;
-  const ScoreBoard({Key? key, required this.player1, required this.player2})
-      : super(key: key);
+  final String player1Name,
+      player2Name,
+      player1Sign,
+      player2Sign,
+      currentPlayerName;
+  final int player1Score, player2Score;
+
+  const ScoreBoard({
+    Key? key,
+    required this.player1Name,
+    required this.player1Sign,
+    required this.player2Name,
+    required this.player2Sign,
+    required this.player1Score,
+    required this.player2Score,
+    required this.currentPlayerName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +30,8 @@ class ScoreBoard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               UserName(
-                playerName: player1.name,
-                sign: player1.stringSign(),
+                playerName: player1Name,
+                sign: player1Sign,
               ),
               Expanded(
                 child: Container(
@@ -45,7 +58,7 @@ class ScoreBoard extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                player1.score.toString(),
+                                player1Score.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: MyColorsScheme.purple,
@@ -61,7 +74,7 @@ class ScoreBoard extends StatelessWidget {
                         Expanded(
                           child: Container(
                             child: Text(
-                              player2.score.toString(),
+                              player2Score.toString(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: MyColorsScheme.purple,
@@ -76,15 +89,15 @@ class ScoreBoard extends StatelessWidget {
                 ),
               ),
               UserName(
-                playerName: player2.name,
-                sign: player2.stringSign(),
+                playerName: player2Name,
+                sign: player2Sign,
               ),
             ]),
         SizedBox(
           height: 10,
         ),
         Text(
-          "${player1.name}'s Turn",
+          "$currentPlayerName's Turn",
           style: TextStyle(color: MyColorsScheme.black, fontSize: 20),
         ),
       ],

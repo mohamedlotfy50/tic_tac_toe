@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tic Tac Toe',
       theme: myAppThemes[Themes.light],
-      home: GameScreen(),
+      home: HomeScreen(),
     );
   }
 }

@@ -23,9 +23,11 @@ class _RoundedElevatedButtonState extends State<RoundedElevatedButton> {
       height: 45,
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-            primary: MyColorsScheme.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
+          primary: MyColorsScheme.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         icon: Icon(
           widget.icon,
           color: MyColorsScheme.purple,

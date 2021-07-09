@@ -1,57 +1,71 @@
 import 'package:flutter/material.dart';
-import '../models/game_board.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/providers/game_provider.dart';
+import '../models/tic_tac_toe_game.dart';
 import '../models/player.dart';
 import '../themes/colors_scheme.dart';
 import '../widgets/board.dart';
 import '../widgets/circular_icon_button.dart';
 import '../widgets/score_board.dart';
 
-class GameScreen extends StatefulWidget {
-  final GameBoard _game = GameBoard();
+class GameScreen extends StatelessWidget {
   GameScreen({Key? key}) : super(key: key);
-
-  @override
-  _GameScreenState createState() => _GameScreenState();
-}
-
-class _GameScreenState extends State<GameScreen> {
-  Player? _player;
-  bool isPlayer1 = true;
-  @override
-  void initState() {
-    _player = widget._game.player1;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 18,
-        ),
-        width: double.infinity,
-        color: _player!.color,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ScoreBoard(
-              player1: widget._game.player1,
-              player2: widget._game.player2,
-            ),
-            Board(),
-            CircularIconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.settings,
-                size: 35,
-                color: MyColorsScheme.purple,
+      body: ChangeNotifierProvider(
+          create: (context) => GameProvider(),
+          builder: (context, child) {
+            return AnimatedContainer(
+              duration: Duration(milliseconds: 500),
+              padding: EdgeInsets.symmetric(
+                horizontal: 18,
               ),
-              backgroundColor: Colors.white,
-            )
-          ],
-        ),
-      ),
+              width: double.infinity,
+              color: context.watch<GameProvider>().gameColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ScoreBoard(
+                      player1Name: context.watch<GameProvider>().player1Name,
+                      player1Score: context.watch<GameProvider>().player1Score,
+                      player1Sign: context.watch<GameProvider>().player1Sign,
+                      player2Name: context.watch<GameProvider>().player2Name,
+                      player2Score: context.watch<GameProvider>().player2Score,
+                      player2Sign: context.watch<GameProvider>().player2Sign,
+                      currentPlayerName:
+                          context.watch<GameProvider>().currentPlayerName),
+                  Board(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircularIconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.settings,
+                          size: 35,
+                          color: MyColorsScheme.purple,
+                        ),
+                        backgroundColor: Colors.white,
+                      ),
+                      if (context.watch<GameProvider>().isGameEnded)
+                        CircularIconButton(
+                          onPressed: () {
+                            context.read<GameProvider>().playNewGame();
+                          },
+                          icon: Icon(
+                            Icons.replay,
+                            size: 35,
+                            color: MyColorsScheme.purple,
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }

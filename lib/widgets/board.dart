@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/providers/game_provider.dart';
 import '../themes/colors_scheme.dart';
 
 class Board extends StatelessWidget {
@@ -6,6 +8,7 @@ class Board extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GameProvider _provider = Provider.of<GameProvider>(context);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -33,17 +36,22 @@ class Board extends StatelessWidget {
                     children: [
                       for (int x = 0; x < 3; x++)
                         Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                right: x < 2 ? 3 : 0, bottom: y < 2 ? 3 : 0),
-                            alignment: Alignment.center,
-                            color: MyColorsScheme.white,
-                            child: Text(
-                              'o'.toUpperCase(),
-                              style: TextStyle(
-                                  color: MyColorsScheme.purple,
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.w300),
+                          child: GestureDetector(
+                            onTap: () {
+                              _provider.makeAMove(y, x);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  right: x < 2 ? 3 : 0, bottom: y < 2 ? 3 : 0),
+                              alignment: Alignment.center,
+                              color: MyColorsScheme.white,
+                              child: Text(
+                                _provider.gameBoard[y][x],
+                                style: TextStyle(
+                                    color: MyColorsScheme.purple,
+                                    fontSize: 65,
+                                    fontWeight: FontWeight.w400),
+                              ),
                             ),
                           ),
                         ),

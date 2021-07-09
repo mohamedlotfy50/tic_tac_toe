@@ -48,18 +48,17 @@ class TicTacToeGame {
                   _board[y][x] == _board[0][2]) {
                 _isGameEnded = true;
                 _winner = _currentPlayer;
-                print('mat be 1st row ');
+                print('x: $x and y: $y');
               } else if (_board[y][x] == _board[1][x] &&
                   _board[y][x] == _board[2][x]) {
                 _isGameEnded = true;
-
                 _winner = _currentPlayer;
-                print('mat be 1st column');
+                print('x: $x and y: $y');
               } else if (_board[y][x] == _board[1][1] &&
                   _board[y][x] == _board[2][2]) {
                 _isGameEnded = true;
                 _winner = _currentPlayer;
-                print('mat be 1st  diagonal');
+                print('x: $x and y: $y');
               }
             }
             //check each column in the game
@@ -68,26 +67,28 @@ class TicTacToeGame {
                   _board[y][x] == _board[2][x]) {
                 _isGameEnded = true;
                 _winner = _currentPlayer;
-                print('mat be coulnm');
+                print('x: $x and y: $y');
               }
             }
 
             //the the rows of the game
 
             else if (y > 0 && x == 0) {
-              if (_board[y][x] == _board[y][1] &&
-                  _board[y][x] == _board[y][2]) {
+              if (_board[y][0] == _board[y][1] &&
+                  _board[y][0] == _board[y][2]) {
                 _isGameEnded = true;
                 _winner = _currentPlayer;
-                print('mat be row ');
+                print('x: $x and y: $y');
+                print('win by row');
               }
               //check the 2nd diagonal
 
-              if (_board[2][x] == _board[1][1] &&
-                  _board[2][x] == _board[0][2]) {
+              if (_board[y][x] == _board[1][1] &&
+                  _board[y][x] == _board[0][2]) {
                 _isGameEnded = true;
                 _winner = _currentPlayer;
-                print('mat be 2st  diagonal');
+                print('x: $x and y: $y');
+                print('win by diagonal');
               }
             }
           } else {
@@ -97,7 +98,7 @@ class TicTacToeGame {
       }
     }
 
-    if (_numberOfEmptyCells == 0) {
+    if (_numberOfEmptyCells == 0 && _isGameEnded == false) {
       _isGameEnded = true;
       _winner = null;
       print('draw');
