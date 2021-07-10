@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:tic_tac_toe/models/tic_tac_toe_game.dart';
 import 'package:tic_tac_toe/models/player.dart';
@@ -27,20 +28,31 @@ class GameProvider extends ChangeNotifier {
   String get currentPlayerName => _game.currentPlayer.name;
   bool get isGameEnded => _game.isGameEnded;
   bool get isHumanTurn => _game.currentPlayer.isHuman;
+  String get winnerName => _game.winner?.name ?? 'Draw';
+  String get winOrDrawMessage => _game.winner == null
+      ? 'Good game from you both👏👏👏.\n Do you want play again?'
+      : 'Congratulation on This Winning🎉🎉🎉.\n Do you want play again?';
 
-  void makeAMove(int y, int x) {
+  void makeAMove(int y, int x, BuildContext context, Widget child) {
     _game.addToTheBoard(x, y);
     if (_game.doesBoardChanged) {
       _player.load();
       _player.play();
       _game.checkForWinner();
       if (_game.isGameEnded == true) {
-        print(_game.winner?.name);
+        showEndGameMessage(context, child);
       } else {
         _game.switchPlayerTurn();
       }
       notifyListeners();
     }
+  }
+
+  void showEndGameMessage(BuildContext context, Widget child) {
+    showDialog(
+      context: context,
+      builder: (context) => child,
+    );
   }
 
   void playNewGame() {

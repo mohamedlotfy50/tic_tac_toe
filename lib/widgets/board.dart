@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/providers/game_provider.dart';
+import 'package:tic_tac_toe/widgets/end_game_dialog.dart';
 import '../themes/colors_scheme.dart';
 
 class Board extends StatelessWidget {
@@ -40,7 +41,16 @@ class Board extends StatelessWidget {
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                _provider.makeAMove(y, x);
+                                _provider.makeAMove(
+                                  y,
+                                  x,
+                                  context,
+                                  ChangeNotifierProvider.value(
+                                    value: _provider,
+                                    builder: (context, child) =>
+                                        EndGameDialog(),
+                                  ),
+                                );
                               },
                               child: Container(
                                 margin: EdgeInsets.only(
