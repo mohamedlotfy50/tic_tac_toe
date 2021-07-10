@@ -42,54 +42,27 @@ class TicTacToeGame {
       if (_isGameEnded == false) {
         for (int x = 0; x < 3; x++) {
           if (_board[y][x] != '') {
-            // check the 1st row and the cross and 1st column and the diagonal from it
-            if (y == 0 && x == 0) {
-              if (_board[y][x] == _board[y][1] &&
-                  _board[y][x] == _board[0][2]) {
-                _isGameEnded = true;
-                _winner = _currentPlayer;
-                print('x: $x and y: $y');
-              } else if (_board[y][x] == _board[1][x] &&
-                  _board[y][x] == _board[2][x]) {
-                _isGameEnded = true;
-                _winner = _currentPlayer;
-                print('x: $x and y: $y');
-              } else if (_board[y][x] == _board[1][1] &&
-                  _board[y][x] == _board[2][2]) {
-                _isGameEnded = true;
-                _winner = _currentPlayer;
-                print('x: $x and y: $y');
-              }
-            }
-            //check each column in the game
-            else if (y == 0 && x >= 0) {
-              if (_board[y][x] == _board[1][x] &&
-                  _board[y][x] == _board[2][x]) {
-                _isGameEnded = true;
-                _winner = _currentPlayer;
-                print('x: $x and y: $y');
-              }
-            }
-
-            //the the rows of the game
-
-            else if (y > 0 && x == 0) {
-              if (_board[y][0] == _board[y][1] &&
-                  _board[y][0] == _board[y][2]) {
-                _isGameEnded = true;
-                _winner = _currentPlayer;
-                print('x: $x and y: $y');
-                print('win by row');
-              }
-              //check the 2nd diagonal
-
-              if (_board[y][x] == _board[1][1] &&
-                  _board[y][x] == _board[0][2]) {
-                _isGameEnded = true;
-                _winner = _currentPlayer;
-                print('x: $x and y: $y');
-                print('win by diagonal');
-              }
+            if (_board[y][0] == _board[y][1] && _board[y][0] == _board[y][2]) {
+              _isGameEnded = true;
+              _winner = _currentPlayer;
+              print('win by row');
+            } else if (_board[0][x] == _board[1][x] &&
+                _board[0][x] == _board[2][x]) {
+              _isGameEnded = true;
+              _winner = _currentPlayer;
+              print('win by column');
+            } else if (_board[0][x] == _board[1][1] &&
+                _board[0][x] == _board[2][2] &&
+                x == 0) {
+              _isGameEnded = true;
+              _winner = _currentPlayer;
+              print('win by first diagonal');
+            } else if (_board[0][x] == _board[1][1] &&
+                _board[0][x] == _board[x][0] &&
+                x == 2) {
+              _isGameEnded = true;
+              _winner = _currentPlayer;
+              print('win by second diagonal');
             }
           } else {
             _numberOfEmptyCells += 1;
