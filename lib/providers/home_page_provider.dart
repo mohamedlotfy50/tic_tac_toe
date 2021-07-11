@@ -60,7 +60,7 @@ class HomePageProvider with ChangeNotifier {
         color: _player1Color,
         isHuman: true);
     _player2 = Player(
-        name: 'Player 2',
+        name: isHuman != null ? 'Ai' : 'Player 2',
         sign: _player2Sign,
         color: _player2Color,
         isHuman: isHuman ?? true);

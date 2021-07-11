@@ -44,12 +44,12 @@ class Board extends StatelessWidget {
                                 _provider.makeAMove(
                                   y,
                                   x,
-                                  context,
-                                  ChangeNotifierProvider.value(
-                                    value: _provider,
-                                    builder: (context, child) =>
-                                        EndGameDialog(),
-                                  ),
+                                  // context,
+                                  // ChangeNotifierProvider.value(
+                                  //   value: _provider,
+                                  //   builder: (context, child) =>
+                                  //       EndGameDialog(),
+                                  // ),
                                 );
                               },
                               child: Container(

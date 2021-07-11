@@ -42,7 +42,9 @@ class GameScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CircularIconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<GameProvider>().playNewGame();
+                        },
                         icon: Icon(
                           Icons.settings,
                           size: 35,
