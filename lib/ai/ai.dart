@@ -1,10 +1,11 @@
-import 'dart:math';
+import 'dart:math' as math;
 
+import 'package:tic_tac_toe/ai/move.dart';
 import 'package:tic_tac_toe/models/tic_tac_toe_game.dart';
 
-class Ai {
-  static Map<String, int> playRamdom(List<List<String>> board) {
-    final Random random = Random();
+class GameMode {
+  static Move easy(List<List<String>> board) {
+    final math.Random random = math.Random();
     int x = random.nextInt(3);
     int y = random.nextInt(3);
 
@@ -12,69 +13,117 @@ class Ai {
       x = random.nextInt(3);
       y = random.nextInt(3);
     }
-    return {'x': x, 'y': y};
+    return Move(x: x, y: y);
   }
 
-  Map<String, int> makeBestMove(TicTacToeGame game) {
-    double bestValue = double.negativeInfinity;
-    Map<String, int> move = {};
+  Move impossible(TicTacToeGame game) {
+    double bestValue = -1000;
+    late Move move;
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        if (game.board[y][x] != '') {
+        if (game.board[y][x] == '') {
           game.board[y][x] = game.player2.stringSign();
-          double movVal = _miniMaxAlgorithm(game, 0, false);
+          double value = miniMaxAlgorithm(game, 0, false);
           game.board[y][x] = '';
+          game.isGameEnded = false;
 
-          if (movVal > bestValue) {
-            print('x is ${x} y is${y}');
-            move = {
-              'x': x,
-              'y': y,
-            };
+          if (value > bestValue) {
+            move = Move(x: x, y: y);
           }
         }
       }
     }
-
+    // print(game.toString());
     return move;
   }
 
-  double _miniMaxAlgorithm(TicTacToeGame game, int depth, bool isMaximizing) {
+  double miniMaxAlgorithm(TicTacToeGame game, int depth, bool isMaximizing) {
+    game.checkForWinner();
     if (game.isGameEnded == true) {
+      print(game.toString());
       return game.gameScore;
     }
 
-    if (isMaximizing) {
-      double bestValue = double.negativeInfinity;
+    if (isMaximizing == true) {
+      double bestMaxValue = -1000;
 
       for (int y = 0; y < 3; y++) {
         for (int x = 0; x < 3; x++) {
-          game.board[y][x] = game.currentPlayer.stringSign();
-          game.switchPlayerTurn();
-          double value = _miniMaxAlgorithm(game, depth + 1, !isMaximizing);
-          bestValue = max(bestValue, value);
-          game.board[y][x] = '';
+          if (game.board[y][x] == '') {
+            game.board[y][x] = game.player2.stringSign();
+
+            double value = miniMaxAlgorithm(game, depth + 1, false);
+            game.board[y][x] = '';
+            bestMaxValue = math.max(bestMaxValue, value);
+          }
         }
       }
-      print(bestValue);
-      return bestValue;
+
+      return bestMaxValue;
     } else {
-      double bestValue = double.infinity;
-
+      double bestMinVal = 1000;
       for (int y = 0; y < 3; y++) {
         for (int x = 0; x < 3; x++) {
-          game.board[y][x] = game.currentPlayer.stringSign();
-          game.switchPlayerTurn();
-          double value = _miniMaxAlgorithm(game, depth + 1, !isMaximizing);
-          bestValue = min(bestValue, value);
-          game.board[y][x] = '';
+          if (game.board[y][x] == '') {
+            game.board[y][x] = game.player1.stringSign();
+
+            double value = miniMaxAlgorithm(game, depth + 1, true);
+            game.board[y][x] = '';
+            bestMinVal = math.min(bestMinVal, value);
+          }
         }
       }
-      print(bestValue);
 
-      return bestValue;
+      return bestMinVal;
     }
   }
-
-  void alphaBetaPruning() {}
 }
+
+// class HelperMethods {
+//   double miniMaxAlgorithm(TicTacToeGame game, int depth, bool isMaximizing) {
+//     game.checkForWinner();
+//     if (game.isGameEnded == true) {
+//       print(game.gameScore);
+//       return game.gameScore;
+//     }
+
+//     if (isMaximizing == true) {
+//       double bestValue = -1000;
+
+//       for (int y = 0; y < 3; y++) {
+//         for (int x = 0; x < 3; x++) {
+//           if (game.board[y][x] == '') {
+//             game.board[y][x] = game.player2.stringSign();
+
+//             double value = miniMaxAlgorithm(game, depth + 1, false);
+//             game.board[y][x] = '';
+//             if (value > bestValue) {
+//               bestValue = value;
+//             }
+//           }
+//         }
+//       }
+
+//       return bestValue;
+//     } else {
+//       double bestValue = 1000;
+//       for (int y = 0; y < 3; y++) {
+//         for (int x = 0; x < 3; x++) {
+//           if (game.board[y][x] == '') {
+//             game.board[y][x] = game.player1.stringSign();
+
+//             double value = miniMaxAlgorithm(game, depth + 1, true);
+//             game.board[y][x] = '';
+//             if (value < bestValue) {
+//               bestValue = value;
+//             }
+//           }
+//         }
+//       }
+
+//       return bestValue;
+//     }
+//   }
+
+//   void alphaBetaPruning() {}
+// }

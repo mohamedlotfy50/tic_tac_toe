@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:tic_tac_toe/ai/ai.dart';
+import 'package:tic_tac_toe/ai/move.dart';
 import 'package:tic_tac_toe/models/tic_tac_toe_game.dart';
 import 'package:tic_tac_toe/models/player.dart';
 import 'package:tic_tac_toe/themes/colors_scheme.dart';
 
 class GameProvider extends ChangeNotifier {
   // final AudioPlayer _player = AudioPlayer();
-  final Ai ai = Ai();
+  final GameMode ai = GameMode();
   late TicTacToeGame _game;
   GameProvider({required Player player1, required Player player2}) {
     _game = TicTacToeGame(player1: player1, player2: player2);
@@ -37,19 +38,14 @@ class GameProvider extends ChangeNotifier {
   void makeAMove(int y, int x) async {
     _game.addToTheBoard(x, y);
     if (_game.doesBoardChanged) {
-      // _player.load();
-      // _player.play();
       _game.checkForWinner();
-      if (_game.isGameEnded == true) {
-        // showEndGameMessage(context, child);
-      } else {
-        _game.switchPlayerTurn();
-        if (!_game.currentPlayer.isHuman) {
-          Map<String, int> aiMove = ai.makeBestMove(_game);
-          makeAMove(aiMove['y']!, aiMove['x']!);
-          notifyListeners();
-        }
+      _game.switchPlayerTurn();
+
+      if (_game.currentPlayer.isHuman == false && _game.isGameEnded == false) {
+        Move aiMove = ai.impossible(_game);
+        makeAMove(aiMove.y, aiMove.x);
       }
+
       notifyListeners();
     }
   }
@@ -65,10 +61,10 @@ class GameProvider extends ChangeNotifier {
     _game.resetTheGame();
     notifyListeners();
     if (!_game.currentPlayer.isHuman) {
-      Map<String, int> aiMove = ai.makeBestMove(_game);
+      Move aiMove = ai.impossible(_game);
       makeAMove(
-        aiMove['y']!,
-        aiMove['x']!,
+        aiMove.y,
+        aiMove.x,
       );
       notifyListeners();
     }
